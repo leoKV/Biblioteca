@@ -1,0 +1,25 @@
+extends layout
+
+block content
+
+  
+  p #[strong Titulo:] 
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p #[strong Editorial:] #{bookinstance.imprint}
+
+  p #[strong Estatus:] 
+    if bookinstance.status=='Disponible'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status=='Mantenimiento'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status} 
+      
+  if bookinstance.status!='Disponible'
+    p #[strong Fecha de Devolución:] #{bookinstance.due_back_formatted}
+
+  hr
+  p
+    a(href=bookinstance.url+'/delete') Eliminar Instancia
+  p
+    a(href=bookinstance.url+'/update') Actualizar Instancia

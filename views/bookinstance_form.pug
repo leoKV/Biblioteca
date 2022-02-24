@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1 Crear Instancia de Libro
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='book') Libro:
+      select#book.form-control(type='select', placeholder='Selecciona un libro' name='book' required='true' )
+        - book_list.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for book in book_list
+          option(value=book._id, selected=(selected_book==book._id.toString() ? 'selected' : false) ) #{book.title}
+        
+    div.form-group
+      label(for='imprint') Editorial:
+      input#imprint.form-control(type='text', placeholder='Información del editor y la fecha' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint) )
+    div.form-group
+      label(for='due_back') Fecha de disponibilidad del libro:
+      input#due_back.form-control(type='date', name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_yyyy_mm_dd))
+            
+    div.form-group
+      label(for='status') Estatus:
+      select#status.form-control(type='select', placeholder='Seleccionar Estatus' name='status' required='true' )
+        option(value='Mantenimiento' selected=(undefined===bookinstance || bookinstance.status!='Mantenimiento' ? false:'selected')) Mantenimiento
+        option(value='Disponible' selected=(undefined===bookinstance || bookinstance.status!='Disponible' ? false:'selected')) Disponible
+        option(value='Prestado' selected=(undefined===bookinstance || bookinstance.status!='Prestado' ? false:'selected')) Prestado
+        option(value='Reservado' selected=(undefined===bookinstance || bookinstance.status!='Reservado' ? false:'selected')) Reservado
+
+    button.btn.btn-primary(type='submit') Añadir
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

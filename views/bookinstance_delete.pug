@@ -1,0 +1,33 @@
+extends layout
+
+block content
+
+  h1 Eliminar Instancia de Libro
+  
+  p #[strong Estas seguro que quieres eliminar esta instancia?]
+  
+  div(style="margin-left:20px")
+
+    p #[strong ID]: #{bookinstance._id}
+  
+    p #[strong Titulo:] 
+      a(href=bookinstance.book.url) #{bookinstance.book.title}
+    
+    p #[strong Editorial:] #{bookinstance.imprint}
+
+    p #[strong Estatus:] 
+      if bookinstance.status=='Available'
+        span.text-success #{bookinstance.status}
+      else if bookinstance.status=='Maintenance'
+        span.text-danger #{bookinstance.status}
+      else
+        span.text-warning #{bookinstance.status} 
+      
+    if bookinstance.status!='Available'
+      p #[strong Fecha de Devolución:] #{bookinstance.due_back_formatted}
+
+  form(method='POST' action='')
+    div.form-group
+      input#id.form-control(type='hidden',name='id', required='true', value=bookinstance._id )
+
+    button.btn.btn-primary(type='submit') Eliminar

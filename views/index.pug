@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1 LIBRERIA VIRTUAL
+  p Bienvenido a nuestra libreria virtual
+
+  h1 Contenido Dinamico
+
+  if error
+    p Error getting dynamic content.
+  else
+
+    p La biblioteca tiene los siguientes recuentos de registros:
+
+    ul
+      li #[strong Libros:] !{data.book_count}
+      li #[strong Copias:] !{data.book_instance_count}
+      li #[strong Copias Disponibles:] !{data.book_instance_available_count}
+      li #[strong Autores:] !{data.author_count}
+      li #[strong Generos:] !{data.genre_count}
